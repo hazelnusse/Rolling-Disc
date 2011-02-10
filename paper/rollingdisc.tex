@@ -1,0 +1,397 @@
+\documentclass[letterpaper,11pt]{article}
+%\usepackage[round]{natbib}
+\usepackage[margin=1in,centering]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pdftricks}
+\begin{psinputs}
+  \usepackage{pstricks}
+  \usepackage{pst-vue3d}
+\end{psinputs}
+%\usepackage{graphicx}
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+    pdftitle={The Rolling Disc},
+    pdfauthor={Dale Lukas Peterson},
+    pdfsubject={Nonholonomic mechanics},
+    pdfkeywords={Dynamics}}
+
+\renewcommand{\b}[1]{ \mathbf{ #1 } }
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+\pagestyle{fancy}
+\fancyhead[L]{The Rolling Disc, Dale L. Peterson}
+\fancyhead[R]{\thepage}  % page number on the right
+\fancyfoot[L,C,R]{}  %  No footer on left, center or right, on even or odd pages
+
+\begin{document}
+
+\section{Model description}
+
+Consider a thin knife edged disc $C$ of radius $r$, mass $m$, and inertia about
+it's mass center of $\mathbf{I}^{C/CO} = I \bs{c}_x\bs{c}_x + J
+\bs{c}_y\bs{c}_y + I \bs{c}_z\bs{c}_z$.  The body fixed reference frame $C$ has
+the $\bs{c}_x$ and $\bs{c}_z$ unit vectors in the plane of the disc and
+$\bs{c}_y$ perpendicular to the plane of the disc.  We denote the center of
+disc as $CO$.
+
+Consider an inertial reference frame $N$ with $\bs{n}_z$ aligned with the local
+gravitational field (``down''), and $\bs{n}_x$ and $\bs{n}_y$ spanning the ``ground
+plane''.  We denote the origin of this inertial frame as $NO$.
+
+We use five generalized coordinates to completely configure $C$ in $N$.  Two
+coordinates $x$ and $y$ locate the contact point of the disc with the ground
+plane.  Euler Z-X-Y ($\psi-\phi-\theta$) angles are used to orient $C$ in
+$N$.  $\psi$ measures the heading angle (yaw) of the path of the disc relative
+$\bs{n}_x$, $\phi$ measures the lean angle (roll) of the plane of the disc
+relative to a vertical plane, and $\theta$ measures the spin angle of the disc
+about it's axis of symmetry.
+
+% We shall see that the dynamic equations depend upon only one of the generalized coordinates, namely the lean angle $\phi$.
+
+We introduce two intermediate reference frames, $A$ and $B$, the ``yaw'' and
+``roll'' frames, respectively.  These are the intermediate frames
+obtained during the sequence of Euler rotations.  As a consequence $\bs{n}_z =
+\bs{a}_z$, $\bs{a}_x = \bs{b}_x$, and $\bs{b}_y = \bs{c}_y$.
+
+The disc is assumed to make point contact with the ground plane and to roll
+without slipping.  For any instant in time, there are four points which are
+coincident to the contact point:
+\begin{itemize}
+  \item[$NC$] Fixed in the inertial frame, instantaneously touches the disc as
+    it rolls past.
+  \item[$\overline{NC}$] Moving in the ground plane frame, constantly touches
+    the disc as it rolls.
+  \item[$CN$] Fixed on the perimeter of the disc, instantaneously touches the
+    ground.
+  \item[$\overline{CN}$] Moving on the disc perimeter, constantly touches the
+    ground as the disc rolls.
+\end{itemize}
+The velocity of points $NC$ and $CN$, relative to the inertial frame,
+are zero because $NC$ is fixed in the inertial plane (hence has zero velocity)
+and because the disc is assumed to roll without slipping.  The velocities of
+$\overline{NC}$ and $\overline{CN}$, however, will not necessarily be zero, but
+they will be equal to each other.  The distinction here is subtle because all
+of these points are coincident (same position), yet they all do not have the
+same velocity.
+
+%We denote the point fixed to the disc which is instantaneously
+%in contact with the ground as $CN$.  The point coincident with this point, but
+%moving relative to inertial frame we denote as $NC$.
+
+%The yaw frame $A$ is obtained by first aligning $A$
+%with $N$ and then performing a simple rotation of $A$ about $\bs{n}_z$ by an
+%angle $\psi$.  The lean frame $B$ is obtained by first  aligning $B$
+%with $A$ and then performing a simple rotation of $B$ about $\bs{a}_x$ by an
+%angle $\phi$.  This then implies that $\bs{n}_z = \bs{a}_z$ and $\bs{a}_x =
+%\bs{b}_x$.
+
+\section{Equations of motion}
+
+\subsection{Kinematics}
+
+\subsubsection{Angular velocities, velocities, and no-slip constraints}
+
+Due to the symmetry of the disc about $\bs{b}_y$, the inertia of the disc can
+be expressed in the coordinates of the $B$ frame, rather than the
+body fixed frame $C$:  $\bs{I}^{C/CO} = I \bs{b}_x\bs{b}_x + J \bs{b}_y\bs{b}_y
++ I \bs{b}_z\bs{b}_z$.  For this reason, we define three generalized speeds
+\begin{equation}
+  \begin{tabular}{ccccccc}
+    $\omega_x \triangleq {}^{N}\bs{\omega}^C \cdot \bs{b}_x$ & & &
+    $\omega_y \triangleq {}^{N}\bs{\omega}^C \cdot \bs{b}_y$ & & &
+    $\omega_z \triangleq {}^{N}\bs{\omega}^C \cdot \bs{b}_z$
+  \end{tabular}
+  \label{eq:genspeeds}
+\end{equation}
+
+We can also express ${}^N\bs{\omega}^C$ in terms of the time derivatives of the Euler angles as
+\begin{align}
+  {}^N\bs{\omega}^C & = \dot{\psi} \bs{a}_z + \dot{\phi} \bs{b}_x +
+  \dot{\theta} \bs{b}_y
+  \label{eq:omega}
+\end{align}
+
+The relationship between the generalized speeds defined in \ref{eq:genspeeds}
+and the time derivatives of the Euler angles can be determined by carrying out
+the dot products in
+(\ref{eq:genspeeds}) while making use of (\ref{eq:omega}).  This results in
+\begin{equation}
+  \begin{tabular}{ccccccc}
+    $\omega_x = \dot{\phi}$ & & &
+    $\omega_y = \dot{\theta} + \dot{\psi}\sin{\phi}$ & & &
+    $\omega_z = \dot{\psi} \cos{\phi}$
+  \end{tabular}
+  \label{eq:kindiffs1}
+\end{equation}
+
+The velocity of the disc center ${}^N\bs{v}^{CO}$ must be formed regardless of
+which method is to be employed to derived the dynamic equations of motion
+(Kane's, Lagrange's, Hamilton's or Newton-Euler).  The velocity
+of the mass center can be formed in two ways, thus providing a natural way by
+which to derive the no-slip conditions (since the two ways must give the same
+velocity).
+
+The first way is to recognize that to prevent slip, ${}^N\bs{v}^{CN} = 0$.
+Since $CN$ and $CO$ are both fixed to the disc, we have
+\begin{align}
+    {}^N\bs{v}^{CO} &= {}^N\bs{v}^{CN} + {}^N\bs{\omega}^C \times
+    (\bs{r}^{CO/CN}) \nonumber \\
+    &= \bs{0} + (\dot{\psi} \bs{a}_z + \dot{\phi} \bs{b}_x
+    + \dot{\theta} \bs{b}_y) \times (-r\bs{b}_z) \nonumber \\
+  &= -r(\dot{\theta} + \dot{\psi}\sin{\phi})\bs{b}_x
+     + r\dot{\phi}\bs{b}_y 
+  \label{eq:vco1}
+\end{align}
+
+The second way is to consider a rod of length $r$ with one end  (moving in $N$)
+and the other end attached to the disc mass center.  The rod is fixed in the
+$B$ reference frame, therefore
+\begin{align}
+    {}^N\bs{v}^{CO} &= \frac{ {}^Nd}{dt}(\bs{r}^{\overline{NC}/NO}
+    + \bs{r}^{CO/\overline{NC}}) \nonumber \\
+    &= \frac{ {}^Nd}{dt}(x\bs{n}_x + y\bs{n}_y - r \bs{b}_z) \nonumber \\
+%    &=  \dot{x} \bs{n}_x + \dot{y} \bs{n}_y 
+%    - {}^N\bs{\omega}^B \times r \bs{b}_z \nonumber \\
+                  &=  \dot{x} \bs{n}_x + \dot{y} \bs{n}_y - r\dot{\psi}\sin{\phi}\bs{b}_x + r\dot{\phi}\bs{b}_y
+  \label{eq:vco2}
+\end{align}
+
+By equating (\ref{eq:vco1}) with (\ref{eq:vco2}) and rearranging, we obtain
+\begin{equation}
+  r\dot{\theta}\bs{b}_x + \dot{x} \bs{n}_x + \dot{y} \bs{n}_y = \bs{0}
+  \label{eq:nhc_vec}
+\end{equation}
+Equation (\ref{eq:nhc_vec}) is the vector form of the no slip rolling
+condition.  Resolving (\ref{eq:nhc_vec}) into components of the $N$ frame, we
+obtain
+\begin{equation}
+  \begin{tabular}{ccccccc}
+  $\dot{x} + r\dot{\theta}\cos{\psi} = 0$ & & & & &
+  $\dot{y} + r\dot{\theta}\sin{\psi} = 0$
+  \end{tabular}
+  \label{eq:nhc_scalar}
+\end{equation}
+which are the scalar form of the no slip rolling condition.
+
+It is important to realize that given $\omega_x$, $\omega_y$, and $\omega_z$,
+the first time derivative of \textit{all} generalized coordinates are
+completely determined by \ref{eq:kindiffs1} and \ref{eq:nhc_scalar}.  The
+generalized speeds change according to a dynamic differential equation.
+
+At this point, if one uses Lagrange's or Hamilton's methods to form the
+equations of motion, the kinematic analysis ends since the kinetic and
+potential energies can be formed, and the constraints have been written in a
+form suitable for employing Lagrange multipliers.  Using Kane's method or
+the Newton-Euler method, accelerations (angular and translational) must be
+formed.  We proceed with these subsequently.
+
+\subsubsection{Angular accelerations, accelerations}
+Rather than utilizing the angular velocity and velocity expressions which
+explicitly depend upon the first time derivatives of the generalized
+coordinates, we employ expressions which depend upon the generalized speeds.
+This approach directly yields dynamic equations in first order form.
+
+The angular acceleration is
+\begin{align}
+    {}^N\bs{\alpha}^{C} &= \frac{ {}^Nd}{dt}{}^N\bs{\omega}^C \nonumber \\
+    &= \frac{ {}^Bd}{dt} {}^N\bs{\omega}^C + {}^N\bs{\omega}^B \times
+    {}^N\bs{\omega}^C
+    \nonumber \\
+    &= \frac{ {}^Bd}{dt}(\omega_x \bs{b}_x + \omega_y \bs{b}_y +\omega_z
+    \bs{b}_z) + (\omega_x \bs{b}_x + \omega_z \tan{\phi} \bs{b}_y + \omega_z
+    \bs{b}_z) \times (\omega_x \bs{b}_x + \omega_y \bs{b}_y +\omega_z
+    \bs{b}_z) \nonumber \\
+    & = (\omega_z^2\tan{\phi} + \dot{\omega}_x- \omega_y\omega_z)\bs{b}_x 
+    + \dot{\omega}_y\bs{b}_y + (\omega_x\omega_y +\dot{\omega}_z -
+    \omega_x\omega_z\tan{\phi}) \bs{b}_z
+  \label{eq:alf}
+\end{align}
+
+The acceleration of the disc mass center is
+\begin{align}
+    {}^N\bs{a}^{CO} &= \frac{ {}^Nd}{dt}{}^N\bs{v}^{CO} \nonumber \\
+    &= \frac{ {}^Bd}{dt} {}^N\bs{v}^{CO} + {}^N\bs{\omega}^B \times
+    {}^N\bs{v}^{CO}
+    \nonumber \\
+    &= \frac{ {}^Bd}{dt} (-r \omega_y \bs{b}_x + r \omega_x \bs{b}_y) + (\omega_x \bs{b}_x + \omega_z \tan{\phi} \bs{b}_y + \omega_z
+    \bs{b}_z) \times (-r \omega_y \bs{b}_x + r \omega_x \bs{b}_y) \nonumber
+    \\
+    &= -r (\omega_x\omega_z + \dot{\omega}_y)\bs{b}_x + r (\dot{\omega}_x -
+    \omega_y \omega_z)\bs{b}_y + r (\omega_x^2 + \omega_y
+    \omega_z\tan{\phi})\bs{b}_z
+  \label{eq:aco}
+\end{align}
+
+
+\subsection{Dynamics}
+There are two forces acting on the disc: gravity at the mass center and
+reaction forces at the ground contact point.  The gravitational force
+acting at $CO$ is
+\begin{align}
+    \bs{F}^{CO} &= mg\bs{a}_z
+    \label{eq:fco}
+\end{align}
+while the contact forces are
+\begin{align}
+    \bs{F}^{CN} &= F_x \bs{a}_x + F_y \bs{a}_y + F_z \bs{a}_z
+    \label{eq:fcn}
+\end{align}
+where the contact force measure numbers have been taken in the $A$ reference
+frame (the yaw frame).  
+
+We now proceed to derive the equations of motion using Kane's method,
+Newton-Euler, Lagranges, and finally Hamilton's method.
+
+\subsubsection{Kane's Method}
+
+The most distinct feature of Kane's method are the partial velocities and
+partial angular velocities.  These are nothing more than the partial
+derivatives of the velocity and angular velocity expressions with respect to
+each of the generalized speeds.  Velocity expressions will always be linear in
+the generalized speeds (which are in turn linear in the first time derivative
+of the coordinates), therefore the partial velocities may be obtained simply by
+determining the vector coefficient of each generalized speed.  We proceed now
+under the assumption that only the motion equations are desired and forces of
+constraint are not of interest.  We will return to the constraint forces
+subsequently.
+
+The partial angular velocities of $C$ are
+\begin{equation}
+  \begin{tabular}{ccccccc}
+      $\bs{\omega}^C_x = \bs{b}_x$ & & &
+      $\bs{\omega}^C_y = \bs{b}_y$ & & &
+      $\bs{\omega}^C_z = \bs{b}_z$
+  \end{tabular}
+  \label{eq:pav}
+\end{equation}
+
+The partial velocities of $CO$ are
+\begin{equation}
+  \begin{tabular}{ccccccc}
+      $\bs{v}^{CO}_x = r \bs{b}_y$ & & &
+      $\bs{v}^{CO}_y = -r \bs{b}_x$ & & &
+      $\bs{v}^{CO}_z = \bs{0}$
+  \end{tabular}
+  \label{eq:pv}
+\end{equation}
+
+Because the three generalized speeds are all independent, we can directly
+proceed to form the motion equations.
+
+Kane's equations can be written as
+\begin{align}
+    (\bs{F}^{CO} - m {}^N\bs{a}^{CO})\cdot \bs{v}^{CO}_i
+    + (-\bs{I}^{C/CO} \cdot {}^N\bs{\alpha}^C
+       - {}^N\bs{\omega}^C \times \bs{I}^{C/CO} \cdot {}^N\bs{\omega}^C)
+       \cdot \bs{\omega}^C_i & = 0 \qquad (i = x, y, z)
+       \label{eq:kane}
+\end{align}
+
+Upon inspection, a few things might appear startling to those not familiar with
+Kane's method.  The first term in (\ref{eq:kane}) is essentially Newton's
+equation for the mass center, except the constraint forces are not included in
+the resultant.  In the second term, a glimmer of Euler's equation is apparent,
+we see the time rate of change of angular momentum, except there is no torque term due to the constraint forces.  Indeed, Kane's
+equations can be viewed as containing at their core the Newton-Euler equations.
+The beauty of Kane's method is that work-less constraint forces (torques), when
+dotted with the partial velocities (partial angular velocities), are zero.  As
+a result, they can be left out entirely, and algebraic elimination of
+constraint forces is unnecessary.  While not an arduous task in a single body
+system, it becomes quickly overwhelming in a multibody system.  Computing the
+dot products in (\ref{eq:kane}) gives three equations of motion
+\begin{align}
+    % First EOM
+    mgr\sin{\phi} + (mr^2 + J)\omega_y\omega_z -
+    I\omega_z^2\tan{\phi} - (mr^2+I)\dot{\omega_x} &= 0 \\
+    % Second EOM
+       -mr^2\omega_x\omega_z - (mr^2 + J)\dot{\omega}_y &= 0 \\
+    % Third EOM
+    I\omega_x\omega_z\tan{\phi} - J\omega_x\omega_y - I\dot{\omega}_z &= 0
+    \label{eq:eoms}
+\end{align}
+
+There are several important features of these equations:
+\begin{itemize}
+
+    \item The mass matrix is diagonal with respect to $\dot{\omega}_x$,
+        $\dot{\omega}_y$, $\dot{\omega}_z$, and the equations are in first
+        order form, ideal for simulation or for stability analysis.  Instead of
+        second time derivatives of generalized coordinates, we instead have
+        first tiem derivatives of generalized speeds.
+
+    \item The constraint force terms do not appear in the equations and no
+        algebraic elimination of them is needed.
+
+    \item The only generalized coordinate that appears in the dynamic
+        equations is $\phi$. This is a direct proof that $x$, $y$,
+        $\psi$, and $\theta$ are cyclic (ignorable) as far as the dynamics are
+        concerned.  In simpler terms, the acceleration of the disc are
+        influenced only by the lean angle $\phi$, no where it is in the ground
+        plane or the direction it is rolling.
+\end{itemize}
+
+
+\subsubsection{Lagrange's Method}
+
+The Lagrangian is computed from the kinetic and potential energies.  The
+kinetic energy can be expressed with time derivatives of the coordinates
+($\dot{q}$'s or with the generalized speeds ($\omega$'s).  In the latter case,
+one would need to employ the chain rule to apply Lagranges equations.  While
+either approch is mathematically equivalent, we chose the former.  The kinetic
+energy is
+\begin{align}
+    T &=  \frac{1}{2}m ({}^N\bs{v}^{CO} \cdot {}^N\bs{v}^{CO} + {}^N\bs{\omega}^C
+    \cdot \bs{I}^{C/CO} \cdot {}^N\bs{\omega}^C) \nonumber \\
+    &= \frac{1}{2}\left( (r^2 + I) \dot{\phi}^2 + I\dot{\psi}^2\cos^2{\phi}
+      + (r^2 + J)(\dot{\theta}+\dot{\psi}\sin{\phi})^2 \right)
+    \label{eq:ke}
+\end{align}
+while the potential energy can be defined as
+\begin{align}
+    V &= \bs{r}^{CO/CN} \cdot mg\bs{a}_z\nonumber \\
+      &= -mgr\cos{\phi}
+    \label{eq:pe}
+\end{align}
+In 
+
+
+We now write the complete set of eight first order ODE's (five kinematic, three
+dynamic) which completely govern the motion of the rolling disc.  They are
+
+\begin{align}
+    \label{eq:psidot}
+    \dot{\psi} &= \omega_z \sec{\phi} \\
+    \label{eq:phidot}
+    \dot{\phi} &= \omega_x \\
+    \label{eq:thetadot}
+    \dot{\theta} &= \omega_y - \omega_z \tan{\phi} \\
+    \label{eq:xdot}
+    \dot{x} &= -r\dot{\theta}\cos{\psi} = r(\omega_z \tan{\phi} - \omega_y)\cos{\psi} \\
+    \label{eq:ydot}
+    \dot{y} &= -r\dot{\theta}\sin{\psi} = r(\omega_z \tan{\phi} - \omega_y)\sin{\psi} \\
+    \label{eq:omegaxdot}
+    \dot{\omega}_x &= (mgr\sin{\phi} + (mr^2 + J)\omega_y\omega_z -
+    I\omega_z^2\tan{\phi})/(mr^2 + I) \\
+    \label{eq:omegaydot}
+    \dot{\omega}_y &= mr^2\omega_x\omega_z/(mr^2 + J) \\
+    \label{eq:omegazdot}
+    \dot{\omega}_z &= \omega_x(\omega_z \tan{\phi} - \omega_y J/I)
+\end{align}
+
+Equations (\ref{eq:psidot})-(\ref{eq:omegazdot}) permit two types of
+equilibrium: static and dynamic.  Static equilibrium occurs when the right hand
+sides of (\ref{eq:psidot})-(\ref{eq:omegazdot}) zero, which implies
+$\omega_x=\omega_y=\omega_z=0$ and $\phi=\pm\pi/2$.  Dynamic equilibrium is
+less restrictive requiring that the right hand sides of only 
+(\ref{eq:phidot}), (\ref{eq:omegaxdot}), (\ref{eq:omegaydot}), and
+(\ref{eq:omegazdot}) be zero.  For dynamic equilibrium, this implies that
+\begin{align}
+    mgr\sin{\phi} + (J + mr^2)\omega_y\omega_z - I\omega_z^2\tan{\phi} & = 0
+    \label{eq:dyneq}
+\end{align}
+
+
+
+\end{document}
